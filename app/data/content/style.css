@@ -1,0 +1,40 @@
+html {
+  background-image: url(images/grey_wash_wall.png);
+  background-size: fill;
+  -webkit-box-sizing: border-box;
+}
+body {
+  font-family: 'Georgia', sans-serif;
+  color: #fff;
+}
+.logo {
+  text-align: center;
+  color: #fceb3e;
+  font-family: 'Advent Pro', sans-serif;
+  font-weight: 500;
+  letter-spacing: .1em;
+  font-size: 60px;
+  line-height: 1;
+  position: relative;
+  float: right;
+  -webkit-text-stroke-width: .5px;
+  -webkit-text-stroke-color: #ab3912;
+}
+#board {
+  border: 1px solid #8b8b8b;
+}
+.gamepiece {
+  width: 50px;
+  height: 50px;
+  color: #000;
+  text-align: center;
+  line-height: 50px;
+}
+.button-tile {
+  width: 50px;
+  height: 50px;
+  background-color: #ebc080;
+  color: black;
+  text-align: center;
+  line-height: 50px;
+}
