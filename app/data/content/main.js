@@ -1,11 +1,9 @@
 // Global variables
-var letter_list = "AAAAAAAAAAAAABBBCCCDDDDDDEEEEFEEEEEEEEEEEEEFFFGGGGHHHIIIIII\
-                   IIIIIIJJKKLLLLLMMMNNNNNNNNOOOOOOOOOOOPPPQQRRRRRRRRRSSSSSSTT\
-                   TTTTTTTUUUUUUVVVWWWXXYYYZZ"
+var letter_list = "AAAAAAAAAAAAABBBCCCDDDDDDEEEEFEEEEEEEEEEEEEFFFGGGGHHHIIIIIIIIIIIIJJKKLLLLLMMMNNNNNNNNOOOOOOOOOOOPPPQQRRRRRRRRRSSSSSSTTTTTTTTTUUUUUUVVVWWWXXYYYZZ";
 
 
 /**
- * Draws the initial board and sets up the game. Accepts no parameters.
+ * Draws the initial board and sets up the game.
  */
 function draw() {
   var canvas = document.getElementById('board');
@@ -14,10 +12,10 @@ function draw() {
   canvas.width = document.body.clientWidth;
   canvas.height = document.body.clientHeight;
 
-  for (var i = 0; i <= letter_list.length; i++) {
-    drawTile(i);
+  for (var i = 0; i < 20; i++) {
+    drawTile();
   }
-};
+}
 
 
 /**
@@ -25,65 +23,35 @@ function draw() {
  * todo: tile placement should be random (near the top for single player)
  *       tiles should be facedown until they are peeled
  * @param {number} letter The letter index to be drawn by this function.
-*/
-function drawTile(letter) {
+ */
+function drawTile() {
   var canvas = document.getElementById('board');
   var ctx = canvas.getContext('2d');
 
-  var character = letter_list[letter];
+  // get a random letter still in the list
+  var index = Math.floor(Math.random()*letter_list.length);
+  var character = letter_list[index];
 
-  var tile_color = '#ebc080';
+  // get a random spot near the top to place it
+  var x = getRandomInt(1, canvas.width);
+  var y = getRandomInt(1, canvas.height * 0.20);
 
-  ctx.fillStyle = tile_color;
-  ctx.strokeStyle = "#000";
-  roundRect(ctx, (100 * letter) + 10, 10, 50, 50, 5, true);
+  // draw the rectangle
+  ctx.fillStyle = '#3498db';
+  ctx.strokeStyle = "#2980b9";
+  ctx.fillRect(x, y, 50, 50);
 
+  // draw the letter on the rectangle
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = 'black';
-  ctx.font = 'bold 16px sans-serif';
-  ctx.fillText(character, ((200 * letter) + 70) / 2, 10 + 50 / 2);
+  ctx.fillStyle = 'white';
+  ctx.font = '300 16px \'Droid Sans\'';
+  ctx.fillText(character, x + 25, y + 25);
+
+  // remove the letter from the list (it has now been peeled)
+  letter_list.slice(0, index) + letter_list.slice(index + 1, letter_list.length)
 }
 
-
-/**
- * Draws a rounded rectangle using the current state of the canvas.
- * If you omit the last three params, it will draw a rectangle
- * outline with a 5 pixel border radius
- * @param {CanvasRenderingContext2D} ctx
- * @param {Number} x The top left x coordinate
- * @param {Number} y The top left y coordinate
- * @param {Number} width The width of the rectangle
- * @param {Number} height The height of the rectangle
- * @param {Number} radius The corner radius. Defaults to 5;
- * @param {Boolean} fill Whether to fill the rectangle. Defaults to false.
- * @param {Boolean} stroke Whether to stroke the rectangle. Defaults to true.
- */
-function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
-  if (typeof stroke == "undefined" ) {
-    stroke = true;
-  }
-  if (typeof radius === "undefined") {
-    radius = 5;
-  }
-  ctx.beginPath();
-  ctx.moveTo(x + radius, y);
-  ctx.lineTo(x + width - radius, y);
-  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-  ctx.lineTo(x + width, y + height - radius);
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  ctx.lineTo(x + radius, y + height);
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-  ctx.lineTo(x, y + radius);
-  ctx.quadraticCurveTo(x, y, x + radius, y);
-  ctx.closePath();
-  if (stroke) {
-    ctx.stroke();
-  }
-  if (fill) {
-    ctx.fill();
-  }
-}
 
 
 
